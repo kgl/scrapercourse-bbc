@@ -5,7 +5,7 @@ headers = {'user-agent':'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWe
 try:
     response = requests.get(
         'https://www.bbc.com/zhongwen/trad/topics/c83plve5vmjt',
-        headers = headers, timeout = 5)
+        headers = headers, timeout = 10)
 
     if response.status_code == 200:
         soup = BeautifulSoup(response.text, 'lxml')
