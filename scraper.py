@@ -1,3 +1,4 @@
+from numpy import size
 import grequests
 from bs4 import BeautifulSoup
 import time
@@ -7,7 +8,8 @@ start_time = time.time()
 links = [f'https://www.bbc.com/zhongwen/trad/topics/c83plve5vmjt/page/{page}' for page in range(1,4)]
 
 reqs = (grequests.get(link) for link in links)
-resps = grequests.imap(reqs, grequests.Pool(3))
+#resps = grequests.imap(reqs, grequests.Pool(3))
+resps = grequests.imap(reqs, size = 3)
 
 for index, resp in enumerate(resps):
     
@@ -24,7 +26,8 @@ for index, resp in enumerate(resps):
     sub_links = ['https://www.bbc.com' + url.get('href') for url in urls]
 
     sub_reqs = (grequests.get(sub_link) for sub_link in sub_links)
-    sub_resps = grequests.imap(sub_reqs, grequests.Pool(10))
+    #sub_resps = grequests.imap(sub_reqs, grequests.Pool(10))
+    sub_resps = grequests.imap(sub_reqs, size = 10)
 
     tag_list = []
     for sub_resp in sub_resps:
